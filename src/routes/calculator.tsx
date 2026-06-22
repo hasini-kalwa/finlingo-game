@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { PiggyBank, TrendingUp, Percent, Calculator as CalcIcon, Wallet, Building } from "lucide-react";
+import { PiggyBank, TrendingUp, Percent, Calculator as CalcIcon, Wallet, Building, Lightbulb } from "lucide-react";
+import { calculatorTips } from "@/lib/finlingo-data";
 
 export const Route = createFileRoute("/calculator")({
   head: () => ({
@@ -56,8 +57,57 @@ function CalcPage() {
         {tab === "compound" && <CompoundInterest />}
         {tab === "emi" && <EMI />}
         {tab === "budget" && <Budget />}
+        <Tips id={tab} />
       </motion.div>
     </main>
+  );
+}
+
+function Tips({ id }: { id: string }) {
+  const tips = calculatorTips[id] ?? [];
+  if (!tips.length) return null;
+  return (
+    <div className="glass-card rounded-3xl p-6 mt-5">
+      <div className="flex items-center gap-2 mb-3">
+        <Lightbulb className="size-5 text-accent-foreground" />
+        <h3 className="font-black text-lg" style={{ fontFamily: "Fredoka" }}>Pro tips</h3>
+      </div>
+      <ul className="space-y-2">
+        {tips.map((t) => (
+          <li key={t} className="flex gap-2 text-sm font-semibold text-muted-foreground">
+            <span className="text-accent-foreground">•</span> {t}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Bar({ segments }: { segments: { label: string; value: number; tint: string }[] }) {
+  const total = segments.reduce((s, x) => s + x.value, 0);
+  return (
+    <div className="glass-card rounded-3xl p-6">
+      <div className="h-5 rounded-full overflow-hidden flex">
+        {segments.map((s) => (
+          <motion.div
+            key={s.label}
+            initial={{ width: 0 }}
+            animate={{ width: `${(s.value / total) * 100}%` }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className={s.tint}
+          />
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-4 mt-4 text-xs font-extrabold">
+        {segments.map((s) => (
+          <div key={s.label} className="flex items-center gap-1.5">
+            <span className={`size-3 rounded-sm ${s.tint}`} />
+            <span className="text-muted-foreground">{s.label}</span>
+            <span>{Math.round((s.value / total) * 100)}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -134,6 +184,10 @@ function SIP() {
         { label: "Returns", value: fmt(fv - invested), tint: "text-secondary" },
         { label: "Future Value", value: fmt(fv), tint: "text-coin" },
       ]} />
+      <Bar segments={[
+        { label: "Invested", value: invested, tint: "bg-primary" },
+        { label: "Returns", value: Math.max(0, fv - invested), tint: "bg-secondary" },
+      ]} />
     </div>
   );
 }
@@ -197,6 +251,10 @@ function EMI() {
         { label: "Total Interest", value: fmt(emi * n - +p), tint: "text-secondary" },
         { label: "Total Paid", value: fmt(emi * n), tint: "text-coin" },
       ]} />
+      <Bar segments={[
+        { label: "Principal", value: +p, tint: "bg-primary" },
+        { label: "Interest", value: Math.max(0, emi * n - +p), tint: "bg-streak" },
+      ]} />
     </div>
   );
 }
@@ -216,6 +274,11 @@ function Budget() {
         { label: "Needs (50%)", value: fmt(needs) },
         { label: "Wants (30%)", value: fmt(wants), tint: "text-secondary" },
         { label: "Save (20%)", value: fmt(save), tint: "text-coin" },
+      ]} />
+      <Bar segments={[
+        { label: "Needs", value: needs, tint: "bg-primary" },
+        { label: "Wants", value: wants, tint: "bg-secondary" },
+        { label: "Save", value: save, tint: "bg-coin" },
       ]} />
     </div>
   );
