@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Flame, Sparkles, Crown } from "lucide-react";
-import { leaderboard } from "@/lib/finlingo-data";
+import { Flame, Sparkles, Crown, TrendingUp, ArrowUp } from "lucide-react";
+import { leaderboard, allBadges } from "@/lib/finlingo-data";
 
 export const Route = createFileRoute("/leaderboard")({
   head: () => ({
@@ -15,7 +16,14 @@ export const Route = createFileRoute("/leaderboard")({
 
 const podiumStyle = ["text-coin", "text-muted-foreground", "text-streak"];
 
+const periods = ["Weekly", "Monthly", "All-time"] as const;
+
 function LeaderPage() {
+  const [period, setPeriod] = useState<(typeof periods)[number]>("Weekly");
+  const you = leaderboard.find((p) => p.name === "You")!;
+  const aboveYou = leaderboard.find((p) => p.rank === you.rank - 1);
+  const gap = aboveYou ? aboveYou.xp - you.xp : 0;
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
@@ -25,10 +33,46 @@ function LeaderPage() {
         <p className="text-muted-foreground font-semibold mt-2">Top finance learners this week</p>
       </div>
 
+      <div className="flex gap-2 justify-center mb-6">
+        {periods.map((p) => (
+          <button
+            key={p}
+            onClick={() => setPeriod(p)}
+            className={`px-4 py-2 rounded-full font-extrabold text-sm transition ${
+              period === p ? "bg-primary text-primary-foreground shadow-pop" : "bg-muted text-muted-foreground hover:bg-muted/70"
+            }`}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="glass-card rounded-3xl p-5 mb-6 relative overflow-hidden"
+      >
+        <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-10" />
+        <div className="flex items-center gap-4">
+          <div className="size-14 rounded-2xl bg-gradient-hero text-white grid place-items-center text-3xl">
+            {you.avatar}
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-extrabold uppercase tracking-widest text-muted-foreground">Your rank</div>
+            <div className="text-2xl font-black" style={{ fontFamily: "Fredoka" }}>#{you.rank} · {you.badge}</div>
+          </div>
+          <div className="text-right">
+            <div className="flex items-center gap-1 text-primary font-extrabold text-sm justify-end">
+              <ArrowUp className="size-4" /> {gap} XP to #{you.rank - 1}
+            </div>
+            <div className="text-xs font-bold text-muted-foreground">Keep going!</div>
+          </div>
+        </div>
+      </motion.div>
+
       <div className="grid grid-cols-3 gap-3 mb-8 items-end">
         {[1, 0, 2].map((idx) => {
           const p = leaderboard[idx];
-          const heights = [1, 0, 2].map((i) => (i === 0 ? "h-44" : "h-36"));
           const h = idx === 0 ? "h-48" : idx === 1 ? "h-40" : "h-32";
           return (
             <motion.div
@@ -84,20 +128,28 @@ function LeaderPage() {
       </div>
 
       <div className="mt-8">
-        <h2 className="font-black text-xl mb-3" style={{ fontFamily: "Fredoka" }}>Badges to Unlock</h2>
+        <div className="flex items-center gap-2 mb-3">
+          <TrendingUp className="size-5 text-purple" />
+          <h2 className="font-black text-xl" style={{ fontFamily: "Fredoka" }}>Badges & Achievements</h2>
+        </div>
         <div className="grid sm:grid-cols-2 gap-3">
-          {[
-            { e: "🌱", n: "Budget Beginner", d: "Earn 100 XP" },
-            { e: "💰", n: "Smart Saver", d: "Reach 500 XP" },
-            { e: "📈", n: "Investment Explorer", d: "Hit 2000 XP" },
-            { e: "🥷", n: "Finance Ninja", d: "Hit 5000 XP" },
-          ].map((b) => (
-            <div key={b.n} className="glass-card rounded-2xl p-4 flex items-center gap-3">
-              <div className="size-12 rounded-2xl bg-primary/10 grid place-items-center text-2xl">{b.e}</div>
-              <div>
-                <div className="font-extrabold">{b.n}</div>
+          {allBadges.map((b) => (
+            <div
+              key={b.n}
+              className={`glass-card rounded-2xl p-4 flex items-center gap-3 ${b.earned ? "" : "opacity-60 grayscale"}`}
+            >
+              <div className={`size-12 rounded-2xl grid place-items-center text-2xl ${
+                b.earned ? "bg-primary/10" : "bg-muted"
+              }`}>{b.e}</div>
+              <div className="flex-1 min-w-0">
+                <div className="font-extrabold truncate">{b.n}</div>
                 <div className="text-xs text-muted-foreground font-bold">{b.d}</div>
               </div>
+              {b.earned && (
+                <span className="text-[10px] font-extrabold uppercase px-2 py-1 rounded-full bg-primary/15 text-primary">
+                  Earned
+                </span>
+              )}
             </div>
           ))}
         </div>
