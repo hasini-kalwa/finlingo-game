@@ -42,6 +42,8 @@ function Index() {
       <Features />
       <HowItWorks />
       <Stats />
+      <Testimonials />
+      <FAQ />
       <CtaFooter />
     </main>
   );
@@ -264,6 +266,73 @@ function CtaFooter() {
       <p className="text-center text-xs text-muted-foreground mt-8 font-bold">
         © 2026 FinLingo · Made for the next generation of money pros
       </p>
+    </section>
+  );
+}
+
+const testimonials = [
+  { name: "Ishita, 17", quote: "I finally get what SIP means. Made one yesterday!", emoji: "🎓" },
+  { name: "Karan, 19", quote: "It's literally Duolingo for money. So addictive.", emoji: "🔥" },
+  { name: "Meera, 16", quote: "The 50/30/20 quest helped me stop overspending.", emoji: "💸" },
+];
+
+function Testimonials() {
+  return (
+    <section className="py-20 px-4 max-w-6xl mx-auto">
+      <h2 className="text-4xl md:text-5xl font-black text-center mb-12" style={{ fontFamily: "Fredoka" }}>
+        Loved by students 💚
+      </h2>
+      <div className="grid sm:grid-cols-3 gap-5">
+        {testimonials.map((t, i) => (
+          <motion.div
+            key={t.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.07 }}
+            className="glass-card rounded-3xl p-6"
+          >
+            <div className="text-4xl mb-3">{t.emoji}</div>
+            <p className="font-bold mb-4">"{t.quote}"</p>
+            <div className="text-sm font-extrabold text-muted-foreground">— {t.name}</div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+const faqs = [
+  { q: "Is FinLingo free?", a: "Yes — all core lessons, calculators, and the AI tutor are free." },
+  { q: "Who is it for?", a: "Teens and college students (15–20) who want to learn money skills the fun way." },
+  { q: "Do I need any finance background?", a: "Nope. We start from zero — what money is, how to save it, how it grows." },
+  { q: "What's the AI tutor?", a: "FinBot — a chat buddy that explains concepts and quizzes you on demand." },
+];
+
+function FAQ() {
+  return (
+    <section className="py-20 px-4 max-w-3xl mx-auto">
+      <h2 className="text-4xl md:text-5xl font-black text-center mb-10" style={{ fontFamily: "Fredoka" }}>
+        Quick answers
+      </h2>
+      <div className="space-y-3">
+        {faqs.map((f, i) => (
+          <motion.details
+            key={f.q}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.05 }}
+            className="glass-card rounded-2xl p-5 group"
+          >
+            <summary className="font-extrabold cursor-pointer flex items-center justify-between">
+              {f.q}
+              <span className="size-7 rounded-full bg-primary/10 text-primary grid place-items-center text-lg group-open:rotate-45 transition">+</span>
+            </summary>
+            <p className="mt-3 text-sm text-muted-foreground font-semibold">{f.a}</p>
+          </motion.details>
+        ))}
+      </div>
     </section>
   );
 }
