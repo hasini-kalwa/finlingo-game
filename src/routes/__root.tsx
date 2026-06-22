@@ -11,6 +11,8 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Navbar } from "@/components/finlingo/Navbar";
+import { FinBot } from "@/components/finlingo/FinBot";
 
 function NotFoundComponent() {
   return (
