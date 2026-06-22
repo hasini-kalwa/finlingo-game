@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LearnRouteImport } from './routes/learn'
+import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,6 +19,11 @@ import { Route as LessonIdRouteImport } from './routes/lesson.$id'
 const LearnRoute = LearnRouteImport.update({
   id: '/learn',
   path: '/learn',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeaderboardRoute = LeaderboardRouteImport.update({
+  id: '/leaderboard',
+  path: '/leaderboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/dashboard': typeof DashboardRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/learn': typeof LearnRoute
   '/lesson/$id': typeof LessonIdRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/dashboard': typeof DashboardRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/learn': typeof LearnRoute
   '/lesson/$id': typeof LessonIdRoute
 }
@@ -60,21 +68,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/calculator': typeof CalculatorRoute
   '/dashboard': typeof DashboardRoute
+  '/leaderboard': typeof LeaderboardRoute
   '/learn': typeof LearnRoute
   '/lesson/$id': typeof LessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/calculator' | '/dashboard' | '/learn' | '/lesson/$id'
+  fullPaths:
+    | '/'
+    | '/calculator'
+    | '/dashboard'
+    | '/leaderboard'
+    | '/learn'
+    | '/lesson/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/calculator' | '/dashboard' | '/learn' | '/lesson/$id'
-  id: '__root__' | '/' | '/calculator' | '/dashboard' | '/learn' | '/lesson/$id'
+  to:
+    | '/'
+    | '/calculator'
+    | '/dashboard'
+    | '/leaderboard'
+    | '/learn'
+    | '/lesson/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/calculator'
+    | '/dashboard'
+    | '/leaderboard'
+    | '/learn'
+    | '/lesson/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CalculatorRoute: typeof CalculatorRoute
   DashboardRoute: typeof DashboardRoute
+  LeaderboardRoute: typeof LeaderboardRoute
   LearnRoute: typeof LearnRoute
   LessonIdRoute: typeof LessonIdRoute
 }
@@ -86,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/learn'
       fullPath: '/learn'
       preLoaderRoute: typeof LearnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaderboard': {
+      id: '/leaderboard'
+      path: '/leaderboard'
+      fullPath: '/leaderboard'
+      preLoaderRoute: typeof LeaderboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -123,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CalculatorRoute: CalculatorRoute,
   DashboardRoute: DashboardRoute,
+  LeaderboardRoute: LeaderboardRoute,
   LearnRoute: LearnRoute,
   LessonIdRoute: LessonIdRoute,
 }
