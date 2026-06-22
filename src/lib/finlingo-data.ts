@@ -174,3 +174,62 @@ export const leaderboard = [
   { rank: 6, name: "Vikram T.", xp: 410, streak: 5, badge: "Budget Beginner", avatar: "🦁" },
   { rank: 7, name: "Anya R.", xp: 380, streak: 4, badge: "Budget Beginner", avatar: "🐱" },
 ];
+
+export const weeklyXp = [
+  { day: "Mon", xp: 40 },
+  { day: "Tue", xp: 80 },
+  { day: "Wed", xp: 65 },
+  { day: "Thu", xp: 110 },
+  { day: "Fri", xp: 50 },
+  { day: "Sat", xp: 90 },
+  { day: "Sun", xp: 25 },
+];
+
+export const dailyQuests = [
+  { id: "q1", title: "Complete 1 lesson", reward: 20, progress: 1, target: 1, emoji: "📚" },
+  { id: "q2", title: "Earn 50 XP", reward: 30, progress: 35, target: 50, emoji: "✨" },
+  { id: "q3", title: "Try a calculator", reward: 25, progress: 0, target: 1, emoji: "🧮" },
+];
+
+export const goals = [
+  { id: "g1", title: "New Laptop", target: 40000, saved: 12000, emoji: "💻" },
+  { id: "g2", title: "Bike Trip", target: 15000, saved: 9500, emoji: "🏍️" },
+];
+
+export const allBadges = [
+  { e: "🥉", n: "First Lesson", d: "Finish your first lesson", earned: true },
+  { e: "🔥", n: "3-day Streak", d: "Practice 3 days in a row", earned: true },
+  { e: "💰", n: "100 Coins", d: "Collect 100 coins", earned: true },
+  { e: "🧠", n: "Quick Thinker", d: "Answer 5 in a row", earned: true },
+  { e: "🌱", n: "Budget Beginner", d: "Earn 100 XP", earned: true },
+  { e: "💸", n: "Smart Saver", d: "Reach 500 XP", earned: false },
+  { e: "📈", n: "Investment Explorer", d: "Hit 2,000 XP", earned: false },
+  { e: "🥷", n: "Finance Ninja", d: "Hit 5,000 XP", earned: false },
+  { e: "🦉", n: "Wise Owl", d: "30-day streak", earned: false },
+];
+
+export const calculatorTips: Record<string, string[]> = {
+  savings: [
+    "Pay yourself first — auto-transfer on payday.",
+    "Round up purchases and save the change.",
+    "Cut 1 subscription you forgot you had.",
+  ],
+  sip: [
+    "Even ₹500/month compounds into lakhs over 20+ years.",
+    "Stay invested through dips — don't time the market.",
+    "Step up your SIP yearly with income.",
+  ],
+  simple: ["Used by short-term loans and FDs (sometimes).", "Interest doesn't compound here."],
+  compound: [
+    "Albert Einstein called this the 8th wonder of the world.",
+    "Time matters more than amount — start early!",
+  ],
+  emi: [
+    "A higher tenure = lower EMI but more interest paid.",
+    "Never let EMIs cross 40% of your monthly income.",
+  ],
+  budget: [
+    "50% Needs · 30% Wants · 20% Save & invest.",
+    "Track weekly — small leaks sink big budgets.",
+  ],
+};
