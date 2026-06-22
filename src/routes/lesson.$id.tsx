@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Heart, X, Sparkles, Coins, Check, ArrowRight } from "lucide-react";
-import { sampleLesson } from "@/lib/finlingo-data";
+import { sampleLesson, modules } from "@/lib/finlingo-data";
 
 export const Route = createFileRoute("/lesson/$id")({
   head: () => ({
@@ -17,6 +17,11 @@ export const Route = createFileRoute("/lesson/$id")({
 
 function LessonPage() {
   const { id } = Route.useParams();
+  const found = modules.flatMap((m) => m.lessons.map((l) => ({ ...l, mod: m.title, emoji: m.emoji })))
+    .find((l) => l.id === id);
+  const lessonTitle = found?.title ?? sampleLesson.title;
+  const moduleTitle = found?.mod ?? "FinLingo";
+  const emoji = found?.emoji ?? "📚";
   const navigate = useNavigate();
   const questions = sampleLesson.questions;
   const [step, setStep] = useState(0);
@@ -135,7 +140,7 @@ function LessonPage() {
       </div>
 
       <div className="text-xs font-extrabold uppercase tracking-widest text-muted-foreground mb-2">
-        Question {step + 1} of {total} · Lesson {id}
+        {emoji} {moduleTitle} · {lessonTitle} · Q {step + 1}/{total}
       </div>
 
       <motion.div
