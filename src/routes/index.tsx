@@ -10,6 +10,10 @@ import {
   Calculator,
   Zap,
   BookOpen,
+  PiggyBank,
+  TrendingUp,
+  Wallet,
+  BadgeCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -45,11 +49,32 @@ function Index() {
   );
 }
 
+const floatIcons = [
+  { Icon: Coins, x: "6%", y: "22%", delay: 0, tint: "text-coin" },
+  { Icon: PiggyBank, x: "88%", y: "20%", delay: 0.6, tint: "text-primary" },
+  { Icon: Wallet, x: "8%", y: "72%", delay: 1.1, tint: "text-secondary" },
+  { Icon: TrendingUp, x: "88%", y: "70%", delay: 0.3, tint: "text-purple" },
+];
+
 function Hero() {
   return (
     <section className="relative min-h-[80vh] flex items-center justify-center px-4 pt-12 pb-20">
       <div className="absolute inset-0 -z-10 opacity-20 bg-gradient-hero" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,oklch(0.99_0.01_130)_0%,transparent_60%)]" />
+      {floatIcons.map(({ Icon, x, y, delay, tint }, i) => (
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay, type: "spring" }}
+          className="absolute hidden lg:block"
+          style={{ left: x, top: y }}
+        >
+          <div className={`size-14 rounded-2xl glass-card grid place-items-center animate-float ${tint}`}>
+            <Icon className="size-7" />
+          </div>
+        </motion.div>
+      ))}
       <div className="max-w-3xl text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -66,7 +91,17 @@ function Hero() {
           style={{ fontFamily: "Fredoka, Nunito" }}
         >
           Learn Money Skills{" "}
-          <span className="bg-gradient-hero bg-clip-text text-transparent">Like a Game</span>
+          <span
+            style={{
+              backgroundImage:
+                "linear-gradient(135deg, oklch(0.72 0.21 142) 0%, oklch(0.7 0.17 250) 50%, oklch(0.62 0.22 300) 100%)",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
+          >
+            Like a Game
+          </span>
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
