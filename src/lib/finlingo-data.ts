@@ -131,36 +131,84 @@ export interface Question {
 }
 
 export const sampleLesson: { title: string; questions: Question[] } = {
-  title: "Needs vs Wants",
+  title: "Money Mastery Challenge",
   questions: [
     {
       prompt:
-        "You receive ₹5000 pocket money every month. You spend ₹3000. How much can you save?",
+        "Inflation is 6% per year. Your savings account pays 4% interest. What's your REAL return after 1 year?",
       type: "choice",
-      options: ["₹1000", "₹1500", "₹2000", "₹2500"],
-      answer: "₹2000",
-      explanation: "Savings = Income − Expense = 5000 − 3000 = ₹2000",
-    },
-    {
-      prompt: "Which of the following is a NEED?",
-      type: "choice",
-      options: ["Food", "Gaming Subscription", "Movie Ticket", "Online Shopping"],
-      answer: "Food",
-      explanation: "Food is essential for survival — that makes it a need.",
+      options: ["+4%", "+2%", "−2%", "−6%"],
+      answer: "−2%",
+      explanation:
+        "Real return ≈ Nominal − Inflation = 4% − 6% = −2%. You're losing purchasing power even though the balance grew.",
     },
     {
       prompt:
-        "You want to buy a laptop worth ₹40,000 and can save ₹4,000 per month. How many months will it take?",
+        "You invest ₹10,000 at 12% compounded annually. Using the Rule of 72, how many years to roughly DOUBLE?",
       type: "input",
-      answer: "10",
-      explanation: "40,000 ÷ 4,000 = 10 months",
+      answer: "6",
+      explanation: "Rule of 72: 72 ÷ 12 = 6 years. A quick mental shortcut for compounding.",
     },
     {
       prompt:
-        "Save ₹500 every week. How many weeks to reach ₹5,000?",
+        "Credit card outstanding: ₹20,000. APR: 36%. You only pay the 5% minimum due. What mainly happens?",
+      type: "choice",
+      options: [
+        "Debt clears in ~2 years",
+        "Interest stops accruing on the rest",
+        "Interest keeps stacking — debt can balloon",
+        "Your credit score improves fast",
+      ],
+      answer: "Interest keeps stacking — debt can balloon",
+      explanation:
+        "Minimum due barely covers interest. 36% APR means ~3% per month compounds on the unpaid balance.",
+    },
+    {
+      prompt:
+        "Following the 50/30/20 rule on a ₹40,000 monthly income, how much should go to SAVINGS & investing?",
       type: "input",
-      answer: "10",
-      explanation: "5,000 ÷ 500 = 10 weeks",
+      answer: "8000",
+      explanation: "20% of ₹40,000 = ₹8,000. Needs 50% (₹20k), Wants 30% (₹12k), Save/Invest 20% (₹8k).",
+    },
+    {
+      prompt:
+        "An emergency fund should typically cover how many months of essential expenses?",
+      type: "choice",
+      options: ["1 month", "2 months", "3–6 months", "12+ months"],
+      answer: "3–6 months",
+      explanation:
+        "Standard guidance: 3–6 months of essentials in a liquid, low-risk account (savings / liquid fund).",
+    },
+    {
+      prompt:
+        "Equity mutual fund SIP of ₹5,000/month for 10 years at 12% avg return ≈ ₹11.6 lakh. Total amount YOU invested?",
+      type: "input",
+      answer: "600000",
+      explanation:
+        "₹5,000 × 12 months × 10 years = ₹6,00,000 invested. The remaining ~₹5.6 lakh is compounding gains.",
+    },
+    {
+      prompt:
+        "Under India's new tax regime (FY 2024-25), income up to which amount has effectively ZERO tax (after rebate)?",
+      type: "choice",
+      options: ["₹2.5 lakh", "₹5 lakh", "₹7 lakh", "₹10 lakh"],
+      answer: "₹7 lakh",
+      explanation:
+        "Section 87A rebate makes tax effectively zero up to ₹7 lakh taxable income under the new regime.",
+    },
+    {
+      prompt:
+        "Which usually has the BIGGEST positive impact on your credit score?",
+      type: "choice",
+      options: [
+        "Closing old credit cards",
+        "Paying every EMI & bill on time",
+        "Using 90%+ of your credit limit",
+        "Applying for many loans at once",
+      ],
+      answer: "Paying every EMI & bill on time",
+      explanation:
+        "Payment history is ~35% of your score — the single largest factor. Keep utilisation under 30% too.",
     },
   ],
 };
