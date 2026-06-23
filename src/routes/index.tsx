@@ -10,10 +10,6 @@ import {
   Calculator,
   Zap,
   BookOpen,
-  PiggyBank,
-  TrendingUp,
-  Wallet,
-  BadgeCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -49,34 +45,11 @@ function Index() {
   );
 }
 
-const floatIcons = [
-  { Icon: Coins, x: "8%", y: "20%", delay: 0, tint: "text-coin" },
-  { Icon: PiggyBank, x: "85%", y: "18%", delay: 0.6, tint: "text-primary" },
-  { Icon: Wallet, x: "12%", y: "70%", delay: 1.1, tint: "text-secondary" },
-  { Icon: TrendingUp, x: "82%", y: "65%", delay: 0.3, tint: "text-purple" },
-  { Icon: Calculator, x: "50%", y: "8%", delay: 0.9, tint: "text-accent-foreground" },
-  { Icon: BadgeCheck, x: "45%", y: "85%", delay: 1.4, tint: "text-streak" },
-];
-
 function Hero() {
   return (
-    <section className="relative min-h-[88vh] flex items-center justify-center px-4 pt-10 pb-20">
-      <div className="absolute inset-0 -z-10 opacity-30 bg-gradient-hero" />
+    <section className="relative min-h-[80vh] flex items-center justify-center px-4 pt-12 pb-20">
+      <div className="absolute inset-0 -z-10 opacity-20 bg-gradient-hero" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,oklch(0.99_0.01_130)_0%,transparent_60%)]" />
-      {floatIcons.map(({ Icon, x, y, delay, tint }, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay, type: "spring" }}
-          className="absolute hidden md:block"
-          style={{ left: x, top: y }}
-        >
-          <div className={`size-14 rounded-2xl glass-card grid place-items-center animate-float ${tint}`}>
-            <Icon className="size-7" />
-          </div>
-        </motion.div>
-      ))}
       <div className="max-w-3xl text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
